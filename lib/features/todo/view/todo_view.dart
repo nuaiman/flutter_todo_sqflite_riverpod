@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_app_nuaiman_ashiq/features/todo/controllers/todo_filter_controller.dart';
 import 'package:todo_app_nuaiman_ashiq/features/todo/controllers/todo_list_controller.dart';
 import 'package:todo_app_nuaiman_ashiq/features/todo/controllers/todo_search_controller.dart';
 
@@ -49,6 +50,7 @@ class _TodoViewState extends ConsumerState<TodoView> {
     final filteredTodosNotifier = ref.watch(filteredTodosProvider.notifier);
     final filteredTodoListProvider = filteredTodosNotifier.getFilteredTodos();
     final searchProvider = ref.watch(todoSearchProvider);
+    final filterProvider = ref.watch(todoFilterProvider);
 
     return Scaffold(
       body: SafeArea(
