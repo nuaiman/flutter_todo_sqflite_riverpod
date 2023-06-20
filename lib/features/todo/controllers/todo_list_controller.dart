@@ -66,13 +66,15 @@ class TodoListControllerNotifier extends StateNotifier<List<Todo>> {
     }).toList();
 
     final db = await _getDatabse();
-    await db.update('todo', {'isDone': value == true ? 'true' : 'false'},
-        where: 'column = ?', whereArgs: [updatableTodoId]);
+    final data = {
+      'isDone': value == true ? 'true' : 'false',
+    };
+    db.update('todo', data, where: "id = ?", whereArgs: [updatableTodoId]);
 
     state = newTodoList;
   }
 
-  void editTodo(String updatableTodoId, String newDescription) {
+  void editTodo(String updatableTodoId, String newDescription) async {
     final newTodoList = state.map((todo) {
       if (todo.id == updatableTodoId) {
         return Todo(
@@ -82,6 +84,12 @@ class TodoListControllerNotifier extends StateNotifier<List<Todo>> {
       }
       return todo;
     }).toList();
+
+    final db = await _getDatabse();
+    final data = {
+      'description': newDescription,
+    };
+    db.update('todo', data, where: "id = ?", whereArgs: [updatableTodoId]);
 
     state = newTodoList;
   }
